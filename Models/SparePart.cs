@@ -2,22 +2,22 @@
 namespace otokocWebApi.Models;
 
 
-public class SparePart
+public record SparePart
 {
     
+    public Guid Id { get; init; }
 
+    public UInt64 PartNo { get; init; } = 0;
 
-    public UInt64 PartNo { get; private set; } = 0;
+    public string PartName { get; init; } = string.Empty;
 
-    public string PartName { get; private set; } = string.Empty;
+    public string Brand { get; init; } = string.Empty;
 
-    public string Brand { get; private set; } = string.Empty;
+    public string Model { get; init; } = string.Empty;
 
-    public UInt16 Model { get; private set; }
+    public UInt16 ModelYear { get; init; }
 
-    public UInt16 ModelYear { get; private set; }
-
-    public UInt32 Price { get; private set; }
+    public decimal Price { get; init; }
 
 }
 
