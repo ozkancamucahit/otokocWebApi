@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace otokocWebApi.Dtos;
 
+
 public record UpdatePartDto
 {
     [Required]
