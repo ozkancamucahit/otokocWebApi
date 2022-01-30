@@ -19,6 +19,8 @@ public record SparePart
 
     public decimal Price { get; init; }
 
+    public DateTimeOffset CreatedDate {get; init;}
+
 }
 
 

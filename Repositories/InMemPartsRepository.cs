@@ -15,27 +15,30 @@ public class InMemPartsRepository : IPartsRepository
             Brand = "Volvo",
             Model = "XC40",
             ModelYear = 2022,
-            Price = 2200.15m
+            Price = 2200.15m,
+            CreatedDate= DateTimeOffset.UtcNow
         },
         new SparePart
         {
             Id = Guid.NewGuid(),
-            PartNo = 1,
+            PartNo = 2,
             PartName = "lol",
             Brand = "Volvo",
             Model = "XC40",
             ModelYear = 2020,
-            Price = 2000.15m
+            Price = 2000.15m,
+            CreatedDate= DateTimeOffset.UtcNow
         },
         new SparePart
         {
             Id = Guid.NewGuid(),
-            PartNo = 1,
+            PartNo = 3,
             PartName = "lol",
             Brand = "Volvo",
             Model = "XC90",
             ModelYear = 2022,
-            Price = 4400.15m
+            Price = 4400.15m,
+            CreatedDate= DateTimeOffset.UtcNow
         },
     };
 
@@ -52,6 +55,32 @@ public class InMemPartsRepository : IPartsRepository
 
         return res;
     }
+
+    public void CreatePart(SparePart part)
+    {
+        Parts.Add(part);
+    }
+
+
+    public void UpdatePart(SparePart part)
+    {
+        var index = Parts.FindIndex(existingPart => existingPart.Id == part.Id);
+
+        Parts[index] = part;
+    }
+
+
+    public void DeletePart(Guid id)
+    {
+        var index = Parts.FindIndex(existingPart => existingPart.Id == id);
+
+        Parts.RemoveAt(index);
+    }
+
+
+
+
+
 
 
 }
