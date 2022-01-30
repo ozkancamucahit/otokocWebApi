@@ -121,6 +121,19 @@ public class SparePartsController : ControllerBase
 
     // DELETE /SpareParts/{id}
 
+    /// <summary>
+    /// DELETES the part with specified id.
+    /// </summary>
+    /// <param name="id">id of the Spare Part object to DELETE.</param>
+    /// <returns>No Content on success.</returns>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     DELETE /SpareParts/{id}
+    ///
+    /// </remarks>
+    /// <response code="204">On successfull delete.</response>
+    /// <response code="404">IF the id is not found</response>
     [HttpDelete("{id}", Name = nameof(DeletePart))]
     public ActionResult DeletePart(Guid id)
     {
