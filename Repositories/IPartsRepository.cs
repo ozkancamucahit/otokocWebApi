@@ -6,13 +6,13 @@ namespace otokocWebApi.Repositories;
 
 public interface IPartsRepository
 {
-    SparePart GetPart(Guid id);
-    IEnumerable<SparePart> GetParts();
+    Task<SparePart> GetPartAsync(Guid id);
+    Task<IEnumerable<SparePart>> GetPartsAsync();
 
-    void CreatePart(SparePart part);
+    Task CreatePartAsync(SparePart part);
     
     
-    void UpdatePart(SparePart part);
+    Task UpdatePartAsync(SparePart part);
 
-    void DeletePart(Guid id);
+    Task DeletePartAsync(Guid id);
 }

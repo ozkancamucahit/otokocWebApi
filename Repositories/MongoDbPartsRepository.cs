@@ -21,35 +21,35 @@ public class MongoDbPartsRepository : IPartsRepository
         PartsColection = database.GetCollection<SparePart>(COLLECTIONNAME);
     }
 
-    public void CreatePart(SparePart part)
+    public async Task CreatePartAsync(SparePart part)
     {
-        PartsColection.InsertOne(part);
+        await PartsColection.InsertOneAsync(part);
     }
 
-    public void DeletePart(Guid id)
+    public async Task DeletePartAsync(Guid id)
     {
         var Filter = filterBuilder.Eq( part => part.Id, id);
 
-        PartsColection.DeleteOne(Filter);
+        await PartsColection.DeleteOneAsync(Filter);
     }
 
-    public SparePart GetPart(Guid id)
+    public async Task<SparePart> GetPartAsync(Guid id)
     {
         var Filter = filterBuilder.Eq( part => part.Id, id);
-        return PartsColection.Find(Filter).SingleOrDefault();
+        return await PartsColection.Find(Filter).SingleOrDefaultAsync();
     }
 
     // Get all parts
-    public IEnumerable<SparePart> GetParts()
+    public async Task<IEnumerable<SparePart>> GetPartsAsync()
     {
-        return PartsColection.Find(new BsonDocument()).ToList();
+        return await PartsColection.Find(new BsonDocument()).ToListAsync();
     }
 
-    public void UpdatePart(SparePart part)
+    public async Task UpdatePartAsync(SparePart part)
     {
         var Filter = filterBuilder.Eq(existingPart => existingPart.Id, part.Id);
 
-        PartsColection.ReplaceOne(Filter, part);
+        await PartsColection.ReplaceOneAsync(Filter, part);
     }
 }
 

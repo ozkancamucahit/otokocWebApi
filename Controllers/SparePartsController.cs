@@ -28,18 +28,19 @@ public class SparePartsController : ControllerBase
     ///     Get /SparePart
     ///
     /// </remarks>
-    [HttpGet(Name = nameof(GetParts))]
+    [HttpGet(Name = nameof(GetPartsAsync))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IEnumerable<SparePartDto> GetParts()
+    public async Task<IEnumerable<SparePartDto>> GetPartsAsync()
     {
-        var parts = Repository.GetParts().Select(part => part.AsDto() );
+        var parts = (await Repository.GetPartsAsync())
+                    .Select(part => part.AsDto() );
         return parts;
     }
 
-    [HttpGet("{id}", Name= nameof(GetPart))]
-    public ActionResult<SparePartDto> GetPart(Guid id)
+    [HttpGet("{id}", Name= nameof(GetPartAsync))]
+    public async Task<ActionResult<SparePartDto>> GetPartAsync(Guid id)
     {
-        var Part = Repository.GetPart(id);
+        var Part = await Repository.GetPartAsync(id);
 
         if (Part is null) return NotFound();
 
@@ -60,10 +61,10 @@ public class SparePartsController : ControllerBase
     /// </remarks>
     /// <response code="201">Returns the part in JSON form.</response>
     /// <response code="400">IF the required field is missing.</response>
-    [HttpPost(Name = nameof(CreatePart))]
+    [HttpPost(Name = nameof(CreatePartAsync))]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public ActionResult<SparePartDto> CreatePart(CreatePartDto partDto)
+    public async Task<ActionResult<SparePartDto>> CreatePartAsync(CreatePartDto partDto)
     {
         SparePart part = new()
         {
@@ -76,9 +77,9 @@ public class SparePartsController : ControllerBase
             Price= partDto.Price,
             CreatedDate= DateTimeOffset.UtcNow
         };
-        Repository.CreatePart(part);
+        await Repository.CreatePartAsync(part);
 
-        return CreatedAtAction(nameof(GetPart), new {id= part.Id}, part.AsDto());
+        return CreatedAtAction(nameof(GetPartAsync), new {id= part.Id}, part.AsDto());
     }
 
     // PUT /SpareParts/{id}
@@ -98,10 +99,10 @@ public class SparePartsController : ControllerBase
     /// <response code="204">On successfull update.</response>
     /// <response code="400">IF the required field is missing.</response>
     /// <response code="404">IF the id is not found</response>
-    [HttpPut("{id}", Name = nameof(UpdatePart))]
-    public ActionResult UpdatePart(Guid id, UpdatePartDto partDto)
+    [HttpPut("{id}", Name = nameof(UpdatePartAsync))]
+    public async Task<ActionResult> UpdatePartAsync(Guid id, UpdatePartDto partDto)
     {
-        var existingPart = Repository.GetPart(id);
+        var existingPart = await Repository.GetPartAsync(id);
 
         if (existingPart is null) return NotFound();
 
@@ -114,7 +115,7 @@ public class SparePartsController : ControllerBase
             Price= partDto.Price
         };
 
-        Repository.UpdatePart(updatedPart);
+        await Repository.UpdatePartAsync(updatedPart);
         return NoContent();
     }
 
@@ -134,14 +135,14 @@ public class SparePartsController : ControllerBase
     /// </remarks>
     /// <response code="204">On successfull delete.</response>
     /// <response code="404">IF the id is not found</response>
-    [HttpDelete("{id}", Name = nameof(DeletePart))]
-    public ActionResult DeletePart(Guid id)
+    [HttpDelete("{id}", Name = nameof(DeletePartAsync))]
+    public async Task<ActionResult> DeletePartAsync(Guid id)
     {
-        var existingPart = Repository.GetPart(id);
+        var existingPart = await Repository.GetPartAsync(id);
 
         if (existingPart is null) return NotFound();
 
-        Repository.DeletePart(id);
+        await Repository.DeletePartAsync(id);
         return NoContent();
     }
 

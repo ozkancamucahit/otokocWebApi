@@ -42,39 +42,42 @@ public class InMemPartsRepository : IPartsRepository
         },
     };
 
-    public IEnumerable<SparePart> GetParts()
+    public async Task<IEnumerable<SparePart>> GetPartsAsync()
     {
-        return Parts;
+        return await Task.FromResult(Parts);
     }
 
-    public SparePart GetPart(Guid id)
+    public async Task<SparePart> GetPartAsync(Guid id)
     {
-        SparePart? res = Parts.Where(part => part.Id == id).SingleOrDefault();
+        var part = Parts.Where(part => part.Id == id).SingleOrDefault();
 
-        //if ( res is null) return null;
+        //if ( part is null) return null;
 
-        return res;
+        return await Task.FromResult(part);
     }
 
-    public void CreatePart(SparePart part)
+    public async Task CreatePartAsync(SparePart part)
     {
         Parts.Add(part);
+        await Task.CompletedTask;
     }
 
 
-    public void UpdatePart(SparePart part)
+    public async Task UpdatePartAsync(SparePart part)
     {
         var index = Parts.FindIndex(existingPart => existingPart.Id == part.Id);
 
         Parts[index] = part;
+        await Task.CompletedTask;
     }
 
 
-    public void DeletePart(Guid id)
+    public async Task DeletePartAsync(Guid id)
     {
         var index = Parts.FindIndex(existingPart => existingPart.Id == id);
 
         Parts.RemoveAt(index);
+        await Task.CompletedTask;
     }
 
 
