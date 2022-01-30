@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Mvc;
+using otokocWebApi.Dtos;
 using otokocWebApi.Models;
 using otokocWebApi.Repositories;
 
@@ -8,13 +9,13 @@ namespace otokocWebApi.Controllers;
 [ApiController]
 [Route("[controller]")]
 [Produces("application/json")]
-public class SparePartController : ControllerBase
+public class SparePartsController : ControllerBase
 {
-    private readonly InMemPartsRepository repository;
+    private readonly IPartsRepository repository;
 
-    public SparePartController()
+    public SparePartsController(IPartsRepository repository_)
     {
-        repository = new InMemPartsRepository();
+        this.repository = repository_;
     }
 
     /// <summary>
@@ -29,20 +30,20 @@ public class SparePartController : ControllerBase
     /// </remarks>
     [HttpGet(Name = nameof(GetParts))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IEnumerable<SparePart> GetParts()
+    public IEnumerable<SparePartDto> GetParts()
     {
-        var parts = repository.GetParts();
+        var parts = repository.GetParts().Select(part => part.AsDto() );
         return parts;
     }
 
     [HttpGet("{id}", Name= nameof(GetPart))]
-    public ActionResult<SparePart> GetPart(Guid id)
+    public ActionResult<SparePartDto> GetPart(Guid id)
     {
         var Part = repository.GetPart(id);
 
         if (Part is null) return NotFound();
 
-        return Part;
+        return Part.AsDto();
     }
 
 

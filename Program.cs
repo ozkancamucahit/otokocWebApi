@@ -1,9 +1,13 @@
 using Microsoft.OpenApi.Models;
+using otokocWebApi.Repositories;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+// register the dependency
+builder.Services.AddSingleton<IPartsRepository, InMemPartsRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

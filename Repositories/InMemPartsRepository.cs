@@ -3,16 +3,40 @@ using otokocWebApi.Models;
 
 namespace otokocWebApi.Repositories;
 
-public class InMemPartsRepository
+public class InMemPartsRepository : IPartsRepository
 {
     private readonly List<SparePart> Parts = new()
     {
-        new SparePart { Id= Guid.NewGuid(), PartNo= 1, PartName="lol",
-        Brand="Volvo", Model="XC40", ModelYear=2022, Price=2200.15m},
-        new SparePart { Id= Guid.NewGuid(), PartNo= 1, PartName="lol",
-        Brand="Volvo", Model="XC40", ModelYear=2020, Price=2000.15m},
-        new SparePart { Id= Guid.NewGuid(), PartNo= 1, PartName="lol",
-        Brand="Volvo", Model="XC90", ModelYear=2022, Price=4400.15m},
+        new SparePart
+        {
+            Id = Guid.NewGuid(),
+            PartNo = 1,
+            PartName = "lol",
+            Brand = "Volvo",
+            Model = "XC40",
+            ModelYear = 2022,
+            Price = 2200.15m
+        },
+        new SparePart
+        {
+            Id = Guid.NewGuid(),
+            PartNo = 1,
+            PartName = "lol",
+            Brand = "Volvo",
+            Model = "XC40",
+            ModelYear = 2020,
+            Price = 2000.15m
+        },
+        new SparePart
+        {
+            Id = Guid.NewGuid(),
+            PartNo = 1,
+            PartName = "lol",
+            Brand = "Volvo",
+            Model = "XC90",
+            ModelYear = 2022,
+            Price = 4400.15m
+        },
     };
 
     public IEnumerable<SparePart> GetParts()
