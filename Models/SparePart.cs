@@ -21,6 +21,13 @@ public record SparePart
 
     public DateTimeOffset CreatedDate {get; init;}
 
+    public DateTimeOffset UpdatedDate { get; init; }
+
+    /// <summary>
+    /// Image url stored in the cloud.
+    /// </summary>
+    public string ImageUrl { get; init; } = string.Empty;
+
 }
 
 

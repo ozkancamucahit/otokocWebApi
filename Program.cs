@@ -72,9 +72,9 @@ if (app.Environment.IsDevelopment())
         options.DisplayOperationId();
     });
     
-    app.UseHttpsRedirection();
 
 }
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

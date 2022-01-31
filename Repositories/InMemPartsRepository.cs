@@ -16,7 +16,9 @@ public class InMemPartsRepository : IPartsRepository
             Model = "XC40",
             ModelYear = 2022,
             Price = 2200.15m,
-            CreatedDate= DateTimeOffset.UtcNow
+            CreatedDate= DateTimeOffset.UtcNow,
+            UpdatedDate= DateTimeOffset.UtcNow,
+            ImageUrl= "xc40_2022.jpeg"
         },
         new SparePart
         {
@@ -27,7 +29,9 @@ public class InMemPartsRepository : IPartsRepository
             Model = "XC40",
             ModelYear = 2020,
             Price = 2000.15m,
-            CreatedDate= DateTimeOffset.UtcNow
+            CreatedDate= DateTimeOffset.UtcNow,
+            UpdatedDate= DateTimeOffset.UtcNow,
+            ImageUrl= "xc40_2020.jpeg"
         },
         new SparePart
         {
@@ -38,7 +42,9 @@ public class InMemPartsRepository : IPartsRepository
             Model = "XC90",
             ModelYear = 2022,
             Price = 4400.15m,
-            CreatedDate= DateTimeOffset.UtcNow
+            CreatedDate= DateTimeOffset.UtcNow,
+            UpdatedDate= DateTimeOffset.UtcNow,
+            ImageUrl= "xc90_2022.jpeg"
         },
     };
 

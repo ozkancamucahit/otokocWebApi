@@ -18,6 +18,9 @@ public record SparePartDto
 
     public decimal Price { get; init; }
 
+    public string ImageUrl { get; init; } = string.Empty;
+
+
 }
 
 

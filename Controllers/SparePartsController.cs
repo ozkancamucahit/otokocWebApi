@@ -28,25 +28,48 @@ public class SparePartsController : ControllerBase
     /// <remarks>
     /// Sample request:
     ///
-    ///     Get /SparePart
+    ///     Get /SpareParts
     ///
     /// </remarks>
+    /// <response code="200">Returns parts in JSON form.</response>
+    /// <response code="404">IF the list is empty.</response>
+    /// TODO: add fromquery to limit requests.
     [HttpGet(Name = nameof(GetPartsAsync))]
-    public async Task<IEnumerable<SparePartDto>> GetPartsAsync()
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<IEnumerable<SparePartDto>>> GetPartsAsync()
     {
         var parts = (await Repository.GetPartsAsync())
                     .Select(part => part.AsDto() );
-        return parts;
+        if (!parts.Any()) return NotFound();
+        
+        return Ok(parts);
     }
 
+    // GET part
+    /// <summary>
+    /// Returns the part with the specified id.
+    /// </summary>
+    /// <param name="id">id to look for.</param>
+    /// <returns>THe part in JSON form.</returns>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     GET /SpareParts/{id}
+    ///
+    /// </remarks>
+    /// <response code="200">Returns the part in JSON form.</response>
+    /// <response code="404">IF the id is not found.</response>
     [HttpGet("{id}", Name= nameof(GetPartAsync))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<SparePartDto>> GetPartAsync(Guid id)
     {
         var Part = await Repository.GetPartAsync(id);
 
         if (Part is null) return NotFound();
 
-        return Part.AsDto();
+        return Ok(Part.AsDto());
     }
 
     // POST /SpareParts
@@ -58,7 +81,7 @@ public class SparePartsController : ControllerBase
     /// <remarks>
     /// Sample request:
     ///
-    ///     POST /SpareParts
+    ///     POST /SpareParts/{part}
     ///
     /// </remarks>
     /// <response code="201">Returns the part in JSON form.</response>
@@ -77,7 +100,9 @@ public class SparePartsController : ControllerBase
             Model= partDto.Model,
             ModelYear= partDto.ModelYear,
             Price= partDto.Price,
-            CreatedDate= DateTimeOffset.UtcNow
+            CreatedDate= DateTimeOffset.UtcNow,
+            UpdatedDate= DateTimeOffset.UtcNow,
+            ImageUrl= partDto.ImageUrl
         };
         await Repository.CreatePartAsync(part);
 
@@ -101,7 +126,11 @@ public class SparePartsController : ControllerBase
     /// <response code="204">On successfull update.</response>
     /// <response code="400">IF the required field is missing.</response>
     /// <response code="404">IF the id is not found</response>
+    /// TODO: add JSON Patch package to patch properties.
     [HttpPut("{id}", Name = nameof(UpdatePartAsync))]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> UpdatePartAsync(Guid id, UpdatePartDto partDto)
     {
         var existingPart = await Repository.GetPartAsync(id);
@@ -114,7 +143,9 @@ public class SparePartsController : ControllerBase
             Brand= partDto.Brand,
             Model= partDto.Model,
             ModelYear= partDto.ModelYear,
-            Price= partDto.Price
+            Price= partDto.Price,
+            UpdatedDate= DateTimeOffset.UtcNow,
+            ImageUrl = partDto.ImageUrl
         };
 
         await Repository.UpdatePartAsync(updatedPart);
@@ -138,6 +169,8 @@ public class SparePartsController : ControllerBase
     /// <response code="204">On successfull delete.</response>
     /// <response code="404">IF the id is not found</response>
     [HttpDelete("{id}", Name = nameof(DeletePartAsync))]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeletePartAsync(Guid id)
     {
         var existingPart = await Repository.GetPartAsync(id);
