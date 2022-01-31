@@ -1,24 +1,38 @@
 
+using System.ComponentModel.DataAnnotations;
+
 namespace otokocWebApi.Dtos;
 
 public record SparePartDto
 {
-    
+    [Required]
     public Guid Id { get; init; }
 
-    public UInt64 PartNo { get; init; } = 0;
+    [Required]
+    public UInt64 PartNo { get; init; }
 
-    public string PartName { get; init; } = string.Empty;
+    [Required]
+    public string PartName { get; init; }
 
-    public string Brand { get; init; } = string.Empty;
+    [Required]
+    public string Brand { get; init; }
 
-    public string Model { get; init; } = string.Empty;
+    [Required]
+    public string Model { get; init; }
 
+    [Required]
     public UInt16 ModelYear { get; init; }
 
+    [Required]
     public decimal Price { get; init; }
 
-    public string ImageUrl { get; init; } = string.Empty;
+    [Required]
+    public DateTimeOffset CreatedDate {get; init;}
+
+    [Required]
+    public DateTimeOffset UpdatedDate { get; init; }
+
+    public string ImageUrl { get; init; }
 
 
 }

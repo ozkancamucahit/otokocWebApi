@@ -91,6 +91,7 @@ public class SparePartsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<SparePartDto>> CreatePartAsync(CreatePartDto partDto)
     {
+        DateTimeOffset now = DateTimeOffset.UtcNow;
         SparePart part = new()
         {
             Id= Guid.NewGuid(),
@@ -100,8 +101,8 @@ public class SparePartsController : ControllerBase
             Model= partDto.Model,
             ModelYear= partDto.ModelYear,
             Price= partDto.Price,
-            CreatedDate= DateTimeOffset.UtcNow,
-            UpdatedDate= DateTimeOffset.UtcNow,
+            CreatedDate= now,
+            UpdatedDate= now,
             ImageUrl= partDto.ImageUrl
         };
         await Repository.CreatePartAsync(part);

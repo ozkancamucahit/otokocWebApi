@@ -21,7 +21,10 @@ public static class Extensions
             Brand= part.Brand,
             Model= part.Model,
             ModelYear= part.ModelYear,
-            Price= part.Price
+            Price= part.Price,
+            CreatedDate= part.CreatedDate,
+            UpdatedDate= part.UpdatedDate,
+            ImageUrl = part.ImageUrl
         };
     }
 }

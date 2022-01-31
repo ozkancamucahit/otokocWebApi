@@ -26,7 +26,7 @@ public record CreatePartDto
     [Range(100, 1_000_000)]
     public decimal Price { get; init; }
 
-    public string ImageUrl { get; init; }
+    public string ImageUrl { get; init; } = string.Empty;
 
 }
 
