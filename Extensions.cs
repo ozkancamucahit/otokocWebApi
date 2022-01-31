@@ -6,6 +6,11 @@ namespace otokocWebApi;
 
 public static class Extensions
 {
+    /// <summary>
+    /// Converts SparePart to DTO
+    /// </summary>
+    /// <param name="part">Part to convert.</param>
+    /// <returns>SparePartDto Object</returns>
     public static SparePartDto AsDto(this SparePart part)
     {
         return new SparePartDto

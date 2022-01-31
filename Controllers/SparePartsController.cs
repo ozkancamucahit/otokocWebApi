@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using otokocWebApi.Dtos;
 using otokocWebApi.Models;
 using otokocWebApi.Repositories;
+using System.Net.Mime;
 
 namespace otokocWebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Produces("application/json")]
+[Produces(MediaTypeNames.Application.Json)]
+[Consumes(MediaTypeNames.Application.Json)]
 public class SparePartsController : ControllerBase
 {
     private readonly IPartsRepository Repository;
@@ -18,6 +20,7 @@ public class SparePartsController : ControllerBase
         this.Repository = repository_;
     }
 
+    //  GET all parts
     /// <summary>
     /// Returns all the spare parts.
     /// </summary>
@@ -29,7 +32,6 @@ public class SparePartsController : ControllerBase
     ///
     /// </remarks>
     [HttpGet(Name = nameof(GetPartsAsync))]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IEnumerable<SparePartDto>> GetPartsAsync()
     {
         var parts = (await Repository.GetPartsAsync())
